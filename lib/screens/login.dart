@@ -56,28 +56,38 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text(App.title)),
-        body: Center(
+        body: Container(
+          margin: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextField(
-                controller: veranstaltungsCodeController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Veranstaltungscode',
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: TextField(
+                  controller: veranstaltungsCodeController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Veranstaltungscode',
+                  ),
                 ),
               ),
-              TextField(
-                controller: teamNameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Teamname',
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: TextField(
+                  controller: teamNameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Teamname',
+                  ),
                 ),
               ),
-              ElevatedButton(
-                // onPressed: () => context.go('/page2'),
-                onPressed: () => joinGame(),
-                child: const Text('Login'),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: ElevatedButton(
+                  // onPressed: () => context.go('/page2'),
+                  onPressed: () => joinGame(),
+                  child: const Text('Login'),
+                ),
               ),
             ],
           ),
