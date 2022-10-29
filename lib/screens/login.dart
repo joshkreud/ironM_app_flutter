@@ -26,8 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final teamNameController = TextEditingController();
 
   void joinGame() async {
-    final ironService =
-        IronGame.create(client: ChopperClient(), baseUrl: ApiConstants.baseUrl);
+    final ironService = IronGame.create(baseUrl: ApiConstants.baseUrl);
     final joinBody = JoinGameMessage(
         gameId: veranstaltungsCodeController.text,
         credentials: Credentials(teamName: teamNameController.text));

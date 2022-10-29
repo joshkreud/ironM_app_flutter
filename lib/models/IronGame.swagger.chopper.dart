@@ -106,17 +106,14 @@ class _$IronGame extends IronGame {
   }
 
   @override
-  Future<Response<NewGameMessage>> _apiQuizRegistrationNewgamePost(
-      {required Credentials? body}) {
+  Future<Response<GameCreated>> _apiQuizRegistrationNewgamePost() {
     final String $url = '/api/QuizRegistration/newgame';
-    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      body: $body,
     );
-    return client.send<NewGameMessage, NewGameMessage>($request);
+    return client.send<GameCreated, GameCreated>($request);
   }
 
   @override

@@ -50,6 +50,15 @@ Map<String, dynamic> _$EditQuestionToJson(EditQuestion instance) =>
       'question': instance.question,
     };
 
+GameCreated _$GameCreatedFromJson(Map<String, dynamic> json) => GameCreated(
+      gameId: json['gameId'] as String?,
+    );
+
+Map<String, dynamic> _$GameCreatedToJson(GameCreated instance) =>
+    <String, dynamic>{
+      'gameId': instance.gameId,
+    };
+
 JoinGameMessage _$JoinGameMessageFromJson(Map<String, dynamic> json) =>
     JoinGameMessage(
       gameId: json['gameId'] as String?,

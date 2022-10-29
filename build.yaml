@@ -5,4 +5,5 @@ targets:
         options:
           input_folder: "lib/swaggers"
           output_folder: "lib/models/"
-          with_base_url: false
+          # with_base_url: false
+          with_converter: true

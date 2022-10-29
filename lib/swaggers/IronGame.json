@@ -672,7 +672,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": { }
+        "additionalProperties": {}
       },
       "QuestionDto": {
         "type": "object",

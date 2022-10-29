@@ -30,11 +30,11 @@ abstract class IronGame extends ChopperService {
     }
 
     final newClient = ChopperClient(
-      services: [_$IronGame()],
-      converter: $JsonSerializableConverter(),
-      interceptors: interceptors ?? [],
-      authenticator: authenticator, /*baseUrl: YOUR_BASE_URL*/
-    );
+        services: [_$IronGame()],
+        converter: $JsonSerializableConverter(),
+        interceptors: interceptors ?? [],
+        authenticator: authenticator,
+        baseUrl: baseUrl ?? 'http://');
     return _$IronGame(newClient);
   }
 
@@ -126,18 +126,19 @@ abstract class IronGame extends ChopperService {
       {@Body() required EditQuestion? body});
 
   ///
-  Future<chopper.Response<NewGameMessage>> apiQuizRegistrationNewgamePost(
-      {required Credentials? body}) {
+  Future<chopper.Response<GameCreated>> apiQuizRegistrationNewgamePost() {
     generatedMapping.putIfAbsent(
-        NewGameMessage, () => NewGameMessage.fromJsonFactory);
+        GameCreated, () => GameCreated.fromJsonFactory);
 
-    return _apiQuizRegistrationNewgamePost(body: body);
+    return _apiQuizRegistrationNewgamePost();
   }
 
   ///
-  @Post(path: '/api/QuizRegistration/newgame')
-  Future<chopper.Response<NewGameMessage>> _apiQuizRegistrationNewgamePost(
-      {@Body() required Credentials? body});
+  @Post(
+    path: '/api/QuizRegistration/newgame',
+    optionalBody: true,
+  )
+  Future<chopper.Response<GameCreated>> _apiQuizRegistrationNewgamePost();
 
   ///
   Future<chopper.Response<NewGameMessage>> apiQuizRegistrationJoingamePost(
@@ -368,6 +369,47 @@ extension $EditQuestionExtension on EditQuestion {
     return EditQuestion(
         questionId: (questionId != null ? questionId.value : this.questionId),
         question: (question != null ? question.value : this.question));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class GameCreated {
+  GameCreated({
+    this.gameId,
+  });
+
+  factory GameCreated.fromJson(Map<String, dynamic> json) =>
+      _$GameCreatedFromJson(json);
+
+  @JsonKey(name: 'gameId')
+  final String? gameId;
+  static const fromJsonFactory = _$GameCreatedFromJson;
+  static const toJsonFactory = _$GameCreatedToJson;
+  Map<String, dynamic> toJson() => _$GameCreatedToJson(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is GameCreated &&
+            (identical(other.gameId, gameId) ||
+                const DeepCollectionEquality().equals(other.gameId, gameId)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(gameId) ^ runtimeType.hashCode;
+}
+
+extension $GameCreatedExtension on GameCreated {
+  GameCreated copyWith({String? gameId}) {
+    return GameCreated(gameId: gameId ?? this.gameId);
+  }
+
+  GameCreated copyWithWrapped({Wrapped<String?>? gameId}) {
+    return GameCreated(gameId: (gameId != null ? gameId.value : this.gameId));
   }
 }
 
