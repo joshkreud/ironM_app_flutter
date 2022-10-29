@@ -6,6 +6,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:iron_app/constants.dart';
+import 'package:chopper/chopper.dart';
+import 'package:iron_app/models/IronGame.swagger.dart';
+import 'package:iron_app/models/client_index.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,26 +26,26 @@ class _LoginScreenState extends State<LoginScreen> {
   final teamNameController = TextEditingController();
 
   void joinGame() async {
-    final uri = Uri.parse(ApiConstants.baseUrl + ApiConstants.joinGameEndpoint);
+    final ironService =
+        IronGame.create(client: ChopperClient(), baseUrl: ApiConstants.baseUrl);
+    final joinBody = JoinGameMessage(
+        gameId: veranstaltungsCodeController.text,
+        credentials: Credentials(teamName: teamNameController.text));
 
-    final joinParameters = {
-      'gameID': veranstaltungsCodeController.text,
-      'credentials': {'teamName': teamNameController.text}
-    };
+    final response =
+        await ironService.apiQuizRegistrationJoingamePost(body: joinBody);
 
-    final joinHeaders = {
-      'accept': 'text/plain',
-      'Content-Type': 'application/json',
-    };
-
-    final response = await http.post(uri,
-        headers: joinHeaders, body: jsonEncode(joinParameters));
-
-    if (response.statusCode == 200) {
-      print(jsonDecode(response.body));
+    if (response.isSuccessful) {
+      // Successful request
+      final body = response.body;
+      print(body);
     } else {
-      final statusCode = response.statusCode;
-      throw Exception('Ehm ... got HTTP: $statusCode');
+      // Error code received from server
+      final code = response.statusCode;
+      final error = response.error;
+      print("Error");
+      print(code);
+      print(error);
     }
   }
 
