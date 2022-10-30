@@ -27,6 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final eventCodeCtrl = TextEditingController();
   final teamNameCtl = TextEditingController();
 
+  void handleConnectionExteption() {
+    print("Dat war wohl nix.");
+  }
+
   void joinGame() async {
     final ironService = IronGame.create(baseUrl: ApiConstants.baseUrl);
     final joinBody = JoinGameMessage(
@@ -40,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
       // Successful request
       final body = response.body;
 
-      print(body);
       final questions = await ironService.apiQuizGetquestionsPost(
           authorization: 'bearer ' + (body?.bearerToken ?? 'null'));
 
@@ -56,9 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Error code received from server
       final code = response.statusCode;
       final error = response.error;
-      print("Error");
-      print(code);
-      print(error);
+      handleConnectionExteption();
     }
   }
 

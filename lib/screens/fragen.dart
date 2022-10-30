@@ -35,15 +35,14 @@ class _FragenScreenState extends State<FragenScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text("IronMap"),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FrageScreen(
-                  question: applicationmodel
-                      .questions?[applicationmodel.CurrentQuestion],
-                  change: _change,
-                  answer: _answer),
+              const Text("Hier könnte ihre frage stehen."),
             ],
           ),
         ),
