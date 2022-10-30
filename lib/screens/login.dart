@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/retry.dart';
 import 'package:iron_app/main.dart';
 import 'package:iron_app/constants.dart';
 import 'package:iron_app/models/IronGame.swagger.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final eventCodeCtrl = TextEditingController();
   final teamNameCtl = TextEditingController();
 
-  Future<bool> joinGame() async {
+  void joinGame() async {
     final ironService = IronGame.create(baseUrl: ApiConstants.baseUrl);
     final joinBody = JoinGameMessage(
         gameId: eventCodeCtrl.text,
@@ -32,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
       // Successful request
       final body = response.body;
       print(body);
-      return true;
+      if (!mounted) return;
+      context.go("/map");
     } else {
       // Error code received from server
       final code = response.statusCode;
@@ -40,8 +44,27 @@ class _LoginScreenState extends State<LoginScreen> {
       print("Error");
       print(code);
       print(error);
-      return false;
     }
+  }
+
+  Future<void> scanQR() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    if (barcodeScanRes.toString() == '-1') return;
+
+    eventCodeCtrl.text = barcodeScanRes;
   }
 
   @override
@@ -74,8 +97,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: const EdgeInsets.only(top: 20),
                 child: TextField(
                   controller: eventCodeCtrl,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () => scanQR(),
+                      icon: const Icon(Icons.qr_code),
+                    ),
+                    border: const OutlineInputBorder(),
                     hintText: 'Veranstaltungscode',
                   ),
                 ),
@@ -83,11 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 child: ElevatedButton(
-                  onPressed: () => joinGame().then((bool loginResult) {
-                    if (loginResult) {
-                      context.go("/map");
-                    }
-                  }),
+                  onPressed: () => joinGame(),
                   child: const Text('Login to Game'),
                 ),
               ),
