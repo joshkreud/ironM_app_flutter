@@ -82,13 +82,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 20),
-                child: ElevatedButton(
-                  onPressed: () => joinGame().then((bool loginResult) {
-                    if (loginResult) {
-                      context.go("/map");
-                    }
-                  }),
-                  child: const Text('Login to Game'),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 40,
+                  child: ElevatedButton(
+                    onPressed: () => joinGame().then((bool loginResult) {
+                      if (loginResult) {
+                        context.go("/map");
+                      }
+                    }),
+                    child: const Text(
+                      'Login to Game',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ),
               ),
             ],
