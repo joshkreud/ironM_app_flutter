@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 child: TextField(
-                  controller: teamNameController,
+                  controller: teamNameCtl,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Teamname',
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 child: TextField(
-                  controller: veranstaltungsCodeController,
+                  controller: eventCodeCtrl,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Veranstaltungscode',
@@ -82,17 +82,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 20),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    // onPressed: () => context.go('/page2'),
-                    onPressed: () => joinGame(),
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
+                child: ElevatedButton(
+                  onPressed: () => joinGame().then((bool loginResult) {
+                    if (loginResult) {
+                      context.go("/map");
+                    }
+                  }),
+                  child: const Text('Login to Game'),
                 ),
               ),
             ],
