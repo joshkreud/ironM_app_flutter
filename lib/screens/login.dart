@@ -47,6 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
 
       final abc = locator<ApplicationModel>();
+
+      abc.myself = body?.playerId ?? 0;
       abc.newGameModel = body;
       abc.questions = questions.body;
       context.go("/map");

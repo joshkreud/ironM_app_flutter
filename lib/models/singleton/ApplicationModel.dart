@@ -6,4 +6,5 @@ class ApplicationModel {
   List<AnswerDto>? answer;
   NewGameMessage? newGameModel;
   int CurrentQuestion = 0;
+  int myself = 0;
 }
