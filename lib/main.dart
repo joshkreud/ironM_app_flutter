@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iron_app/models/singleton/ApplicationModel.dart';
 import 'package:iron_app/screens/fragen.dart';
+import 'package:iron_app/screens/help.dart';
 import 'package:iron_app/screens/login.dart';
 import 'package:iron_app/screens/map.dart';
 import 'package:get_it/get_it.dart';
@@ -51,6 +52,11 @@ class App extends StatelessWidget {
             path: 'fragen',
             builder: (BuildContext context, GoRouterState state) =>
                 const FragenScreen(),
+          ),
+          GoRoute(
+            path: 'help',
+            builder: (BuildContext context, GoRouterState state) =>
+                const HelpScreen(),
           ),
         ],
       ),
