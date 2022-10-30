@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iron_app/constants.dart';
 import 'package:iron_app/models/singleton/ApplicationModel.dart';
 import 'package:iron_app/screens/fragen.dart';
 import 'package:iron_app/screens/help.dart';
@@ -34,6 +35,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp.router(
         routerConfig: _router,
         title: title,
+        theme: ThemeData(primaryColor: AppConstants.primaryColor),
       );
 
   final GoRouter _router = GoRouter(

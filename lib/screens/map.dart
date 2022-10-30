@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
+import 'package:iron_app/texts.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -30,36 +31,39 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("IronMap"),
+        title: Text(ScreenHeaders.ironMap),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Stack(children: [
-        Align(
-          alignment: Alignment.bottomRight,
-          child: SizedBox(
-            width: 200,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Stack(children: [
+          Align(
+            alignment: Alignment.bottomRight,
+            child: SizedBox(
+              width: 200,
+              child: FloatingActionButton(
+                heroTag: "QuestionButton",
+                onPressed: () => showQuestion(),
+                backgroundColor: Colors.green,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                child: Text(ButtonTexts.gotoTasks),
+              ),
+            ),
+          ),
+          Align(
+            alignment: FractionalOffset.bottomLeft,
             child: FloatingActionButton(
-              heroTag: "QuestionButton",
-              onPressed: () => showQuestion(),
+              heroTag: "HelpButton",
+              onPressed: () => showHelp(),
               backgroundColor: Colors.green,
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: const Text("zu den Aufgaben"),
+              child: const Icon(Icons.question_mark),
             ),
           ),
-        ),
-        Align(
-          alignment: FractionalOffset.bottomLeft,
-          child: FloatingActionButton(
-            heroTag: "HelpButton",
-            onPressed: () => showHelp(),
-            backgroundColor: Colors.green,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-            child: const Icon(Icons.question_mark),
-          ),
-        ),
-      ]),
+        ]),
+      ),
       body: FlutterMap(
         options: MapOptions(
           center: LatLng(50.558757, 9.688264),

@@ -5,6 +5,7 @@ import 'package:iron_app/constants.dart';
 import 'package:iron_app/models/IronGame.swagger.dart';
 import 'package:iron_app/models/singleton/ApplicationModel.dart';
 import 'package:iron_app/screens/frage.dart';
+import 'package:iron_app/texts.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -52,7 +53,7 @@ class _FragenScreenState extends State<FragenScreen> {
     _change(0);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("IronMap"),
+        title: Text(ScreenHeaders.questionScreen),
       ),
       body: Center(
         child:

@@ -22,3 +22,33 @@ Aufgabenstellung Foto/Video: Wenn ein Foto/Video gefordert wird, können Sie mit
 
 """;
 }
+
+class HeaderTexts {
+  static String teamname = "Teamname:";
+  static String eventCode = "EventCode:";
+}
+
+class ButtonTexts {
+  static String gotoTasks = "zu den Aufgaben";
+  static String gotoHelp = "Hilfe";
+  static String login = "Login";
+}
+
+class ScreenHeaders {
+  static String ironApp = "Iron App";
+  static String ironMap = "Iron Map";
+  static String questionScreen = "Iron Quest";
+  static String ironHelp = "Iron Help";
+}
+
+class HintTexts {
+  static String answer = "Antwort";
+  static String sendAnswer = "Absenden";
+  static String teamName = "Teamname";
+  static String eventCode = "Event code";
+}
+
+class ErrorTexts {
+  static String loginFailed = "";
+  static String plattformFailed = "Failed to get platform version.";
+}

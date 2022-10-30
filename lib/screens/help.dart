@@ -8,7 +8,7 @@ class HelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Hilfeeee")),
+        appBar: AppBar(title: Text(ScreenHeaders.ironHelp)),
         body: Markdown(data: AppTexts.helptext));
   }
 }

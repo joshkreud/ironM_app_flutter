@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_app/models/IronGame.swagger.dart';
+import 'package:iron_app/texts.dart';
 
 class FrageScreen extends StatelessWidget {
   FrageScreen(
@@ -19,9 +20,9 @@ class FrageScreen extends StatelessWidget {
         Text(question?.questionText ?? ""),
         TextField(
           controller: antwortCtl,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Antwort',
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            hintText: HintTexts.answer,
           ),
         ),
         ElevatedButton(
@@ -40,9 +41,9 @@ class FrageScreen extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () => answer(antwortCtl.text),
-          child: const Text(
-            'Absenden',
-            style: TextStyle(fontSize: 18),
+          child: Text(
+            HintTexts.sendAnswer,
+            style: const TextStyle(fontSize: 18),
           ),
         ),
       ],

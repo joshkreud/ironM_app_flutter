@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:iron_app/models/singleton/ApplicationModel.dart';
+import 'package:iron_app/texts.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -28,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final teamNameCtl = TextEditingController();
 
   void handleConnectionExteption() {
-    print("Dat war wohl nix.");
+    print(ErrorTexts.loginFailed);
   }
 
   void joinGame() async {
@@ -71,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
     } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
+      barcodeScanRes = ErrorTexts.plattformFailed;
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -106,26 +107,36 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(top: 20),
-              child: TextField(
-                controller: teamNameCtl,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Teamname',
-                ),
+              child: Column(
+                children: [
+                  Text(HeaderTexts.teamname),
+                  TextField(
+                    controller: teamNameCtl,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: HintTexts.teamName,
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 20),
-              child: TextField(
-                controller: eventCodeCtrl,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () => scanQR(),
-                    icon: const Icon(Icons.qr_code),
+              child: Column(
+                children: [
+                  Text(HeaderTexts.eventCode),
+                  TextField(
+                    controller: eventCodeCtrl,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () => scanQR(),
+                        icon: const Icon(Icons.qr_code),
+                      ),
+                      border: const OutlineInputBorder(),
+                      hintText: HintTexts.eventCode,
+                    ),
                   ),
-                  border: const OutlineInputBorder(),
-                  hintText: 'Veranstaltungscode',
-                ),
+                ],
               ),
             ),
             Container(
@@ -135,9 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 40,
                 child: ElevatedButton(
                   onPressed: () => joinGame(),
-                  child: const Text(
-                    'Login to Game',
-                    style: TextStyle(fontSize: 18),
+                  child: Text(
+                    ButtonTexts.login,
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
               ),
