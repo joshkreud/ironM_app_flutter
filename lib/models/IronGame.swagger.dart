@@ -39,10 +39,11 @@ abstract class IronGame extends ChopperService {
   }
 
   ///
-  Future<chopper.Response<List<PlayerDto>>> apiQuizGetplayerPost() {
+  Future<chopper.Response<List<PlayerDto>>> apiQuizGetplayerPost(
+      {String? authorization}) {
     generatedMapping.putIfAbsent(PlayerDto, () => PlayerDto.fromJsonFactory);
 
-    return _apiQuizGetplayerPost();
+    return _apiQuizGetplayerPost(authorization: authorization);
   }
 
   ///
@@ -50,14 +51,16 @@ abstract class IronGame extends ChopperService {
     path: '/api/Quiz/getplayer',
     optionalBody: true,
   )
-  Future<chopper.Response<List<PlayerDto>>> _apiQuizGetplayerPost();
+  Future<chopper.Response<List<PlayerDto>>> _apiQuizGetplayerPost(
+      {@Header('Authorization') String? authorization});
 
   ///
-  Future<chopper.Response<List<QuestionDto>>> apiQuizGetquestionsPost() {
+  Future<chopper.Response<List<QuestionDto>>> apiQuizGetquestionsPost(
+      {String? authorization}) {
     generatedMapping.putIfAbsent(
         QuestionDto, () => QuestionDto.fromJsonFactory);
 
-    return _apiQuizGetquestionsPost();
+    return _apiQuizGetquestionsPost(authorization: authorization);
   }
 
   ///
@@ -65,24 +68,30 @@ abstract class IronGame extends ChopperService {
     path: '/api/Quiz/getquestions',
     optionalBody: true,
   )
-  Future<chopper.Response<List<QuestionDto>>> _apiQuizGetquestionsPost();
+  Future<chopper.Response<List<QuestionDto>>> _apiQuizGetquestionsPost(
+      {@Header('Authorization') String? authorization});
 
   ///
-  Future<chopper.Response> apiQuizSendquestionPost(
-      {required NewQuestionMessage? body}) {
-    return _apiQuizSendquestionPost(body: body);
+  Future<chopper.Response> apiQuizSendquestionPost({
+    String? authorization,
+    required NewQuestionMessage? body,
+  }) {
+    return _apiQuizSendquestionPost(authorization: authorization, body: body);
   }
 
   ///
   @Post(path: '/api/Quiz/sendquestion')
-  Future<chopper.Response> _apiQuizSendquestionPost(
-      {@Body() required NewQuestionMessage? body});
+  Future<chopper.Response> _apiQuizSendquestionPost({
+    @Header('Authorization') String? authorization,
+    @Body() required NewQuestionMessage? body,
+  });
 
   ///
-  Future<chopper.Response<List<AnswerDto>>> apiQuizGetanswersPost() {
+  Future<chopper.Response<List<AnswerDto>>> apiQuizGetanswersPost(
+      {String? authorization}) {
     generatedMapping.putIfAbsent(AnswerDto, () => AnswerDto.fromJsonFactory);
 
-    return _apiQuizGetanswersPost();
+    return _apiQuizGetanswersPost(authorization: authorization);
   }
 
   ///
@@ -90,47 +99,61 @@ abstract class IronGame extends ChopperService {
     path: '/api/Quiz/getanswers',
     optionalBody: true,
   )
-  Future<chopper.Response<List<AnswerDto>>> _apiQuizGetanswersPost();
+  Future<chopper.Response<List<AnswerDto>>> _apiQuizGetanswersPost(
+      {@Header('Authorization') String? authorization});
 
   ///
-  Future<chopper.Response> apiQuizSendanswerPost(
-      {required NewAnswerMessage? body}) {
-    return _apiQuizSendanswerPost(body: body);
+  Future<chopper.Response> apiQuizSendanswerPost({
+    String? authorization,
+    required NewAnswerMessage? body,
+  }) {
+    return _apiQuizSendanswerPost(authorization: authorization, body: body);
   }
 
   ///
   @Post(path: '/api/Quiz/sendanswer')
-  Future<chopper.Response> _apiQuizSendanswerPost(
-      {@Body() required NewAnswerMessage? body});
+  Future<chopper.Response> _apiQuizSendanswerPost({
+    @Header('Authorization') String? authorization,
+    @Body() required NewAnswerMessage? body,
+  });
 
   ///
-  Future<chopper.Response> apiQuizDeletequestionPost(
-      {required DeleteQuestion? body}) {
-    return _apiQuizDeletequestionPost(body: body);
+  Future<chopper.Response> apiQuizDeletequestionPost({
+    String? authorization,
+    required DeleteQuestion? body,
+  }) {
+    return _apiQuizDeletequestionPost(authorization: authorization, body: body);
   }
 
   ///
   @Post(path: '/api/Quiz/deletequestion')
-  Future<chopper.Response> _apiQuizDeletequestionPost(
-      {@Body() required DeleteQuestion? body});
+  Future<chopper.Response> _apiQuizDeletequestionPost({
+    @Header('Authorization') String? authorization,
+    @Body() required DeleteQuestion? body,
+  });
 
   ///
-  Future<chopper.Response> apiQuizEditquestionPost(
-      {required EditQuestion? body}) {
-    return _apiQuizEditquestionPost(body: body);
+  Future<chopper.Response> apiQuizEditquestionPost({
+    String? authorization,
+    required EditQuestion? body,
+  }) {
+    return _apiQuizEditquestionPost(authorization: authorization, body: body);
   }
 
   ///
   @Post(path: '/api/Quiz/editquestion')
-  Future<chopper.Response> _apiQuizEditquestionPost(
-      {@Body() required EditQuestion? body});
+  Future<chopper.Response> _apiQuizEditquestionPost({
+    @Header('Authorization') String? authorization,
+    @Body() required EditQuestion? body,
+  });
 
   ///
-  Future<chopper.Response<GameCreated>> apiQuizRegistrationNewgamePost() {
+  Future<chopper.Response<GameCreated>> apiQuizRegistrationNewgamePost(
+      {String? authorization}) {
     generatedMapping.putIfAbsent(
         GameCreated, () => GameCreated.fromJsonFactory);
 
-    return _apiQuizRegistrationNewgamePost();
+    return _apiQuizRegistrationNewgamePost(authorization: authorization);
   }
 
   ///
@@ -138,21 +161,27 @@ abstract class IronGame extends ChopperService {
     path: '/api/QuizRegistration/newgame',
     optionalBody: true,
   )
-  Future<chopper.Response<GameCreated>> _apiQuizRegistrationNewgamePost();
+  Future<chopper.Response<GameCreated>> _apiQuizRegistrationNewgamePost(
+      {@Header('Authorization') String? authorization});
 
   ///
-  Future<chopper.Response<NewGameMessage>> apiQuizRegistrationJoingamePost(
-      {required JoinGameMessage? body}) {
+  Future<chopper.Response<NewGameMessage>> apiQuizRegistrationJoingamePost({
+    String? authorization,
+    required JoinGameMessage? body,
+  }) {
     generatedMapping.putIfAbsent(
         NewGameMessage, () => NewGameMessage.fromJsonFactory);
 
-    return _apiQuizRegistrationJoingamePost(body: body);
+    return _apiQuizRegistrationJoingamePost(
+        authorization: authorization, body: body);
   }
 
   ///
   @Post(path: '/api/QuizRegistration/joingame')
-  Future<chopper.Response<NewGameMessage>> _apiQuizRegistrationJoingamePost(
-      {@Body() required JoinGameMessage? body});
+  Future<chopper.Response<NewGameMessage>> _apiQuizRegistrationJoingamePost({
+    @Header('Authorization') String? authorization,
+    @Body() required JoinGameMessage? body,
+  });
 }
 
 @JsonSerializable(explicitToJson: true)

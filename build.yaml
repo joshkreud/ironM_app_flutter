@@ -7,3 +7,6 @@ targets:
           output_folder: "lib/models/"
           # with_base_url: false
           with_converter: true
+          use_required_attribute_for_header: false
+          additional_headers: 
+            - "Authorization"

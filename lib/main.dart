@@ -4,19 +4,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iron_app/models/singleton/ApplicationModel.dart';
+import 'package:iron_app/screens/fragen.dart';
 import 'package:iron_app/screens/login.dart';
 import 'package:iron_app/screens/map.dart';
+import 'package:get_it/get_it.dart';
 
-// This scenario demonstrates a simple two-page app.
-//
-// The first route '/' is mapped to Page1Screen, and the second route '/page2'
-// is mapped to Page2Screen. To navigate between pages, press the buttons on the
-// pages.
-//
-// The onPress callbacks use context.go() to navigate to another page. This is
-// equivalent to entering url to the browser url bar directly.
+GetIt locator = GetIt.instance;
 
-void main() => runApp(App());
+void main() {
+  initLocator();
+  runApp(App());
+}
+
+initLocator() {
+  locator.registerSingleton<ApplicationModel>(ApplicationModel());
+}
 
 /// The main app.
 class App extends StatelessWidget {
@@ -43,6 +46,11 @@ class App extends StatelessWidget {
             path: 'map',
             builder: (BuildContext context, GoRouterState state) =>
                 const MapScreen(),
+          ),
+          GoRoute(
+            path: 'fragen',
+            builder: (BuildContext context, GoRouterState state) =>
+                const FragenScreen(),
           ),
         ],
       ),

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/retry.dart';
+
 import 'package:iron_app/main.dart';
 import 'package:iron_app/constants.dart';
 import 'package:iron_app/models/IronGame.swagger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
+import 'package:iron_app/models/singleton/ApplicationModel.dart';
+
+GetIt locator = GetIt.instance;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,8 +39,16 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response.isSuccessful) {
       // Successful request
       final body = response.body;
+
       print(body);
+      final questions = await ironService.apiQuizGetquestionsPost(
+          authorization: 'bearer ' + (body?.bearerToken ?? 'null'));
+
       if (!mounted) return;
+
+      final abc = locator<ApplicationModel>();
+      abc.newGameModel = body;
+      abc.questions = questions.body;
       context.go("/map");
     } else {
       // Error code received from server
