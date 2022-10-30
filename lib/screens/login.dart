@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final eventCodeCtrl = TextEditingController();
   final teamNameCtl = TextEditingController();
 
-  void joinGame() async {
+  Future<bool> joinGame() async {
     final ironService = IronGame.create(baseUrl: ApiConstants.baseUrl);
     final joinBody = JoinGameMessage(
         gameId: eventCodeCtrl.text,
@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Successful request
       final body = response.body;
       print(body);
+      return true;
     } else {
       // Error code received from server
       final code = response.statusCode;
@@ -39,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print("Error");
       print(code);
       print(error);
+      return false;
     }
   }
 
@@ -82,7 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: const EdgeInsets.only(top: 20),
                 child: ElevatedButton(
                   // onPressed: () => context.go('/page2'),
-                  onPressed: () => joinGame(),
+                  onPressed: () => joinGame().then((bool loginResult) {
+                    if (loginResult) {
+                      context.go("/map");
+                    }
+                  }),
                   child: const Text('Login to Game'),
                 ),
               ),
