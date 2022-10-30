@@ -42,7 +42,11 @@ class _FragenScreenState extends State<FragenScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text("Hier könnte ihre frage stehen."),
+              FrageScreen(
+                  answer: _answer,
+                  change: _change,
+                  question: applicationmodel
+                      .questions[applicationmodel.CurrentQuestion]),
             ],
           ),
         ),
