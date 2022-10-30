@@ -28,10 +28,15 @@ class _MapScreenState extends State<MapScreen> {
       appBar: AppBar(
         title: const Text("IronMap"),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showQuestion(),
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.question_answer),
+      floatingActionButton: SizedBox(
+        width: 200,
+        child: FloatingActionButton(
+          onPressed: () => showQuestion(),
+          backgroundColor: Colors.green,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          child: const Text("zu den Aufgaben"),
+        ),
       ),
       body: FlutterMap(
         options: MapOptions(
