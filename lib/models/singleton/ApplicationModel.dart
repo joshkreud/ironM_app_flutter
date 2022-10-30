@@ -5,6 +5,7 @@ class ApplicationModel {
   List<PlayerDto>? player;
   List<AnswerDto>? answer;
   NewGameMessage? newGameModel;
+  String? authentication;
   int CurrentQuestion = 0;
   int myself = 0;
 }

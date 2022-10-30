@@ -11,42 +11,41 @@ class FrageScreen extends StatelessWidget {
 
   final antwortCtl = TextEditingController();
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(question?.questionText ?? ""),
-              TextField(
-                controller: antwortCtl,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Teamname',
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () => change(-1),
-                child: const Text(
-                  '<',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () => change(1),
-                child: const Text(
-                  '>',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () => answer(antwortCtl.text),
-                child: const Text(
-                  'Absenden',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ],
+  Widget build(BuildContext context) {
+    change(0);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(question?.questionText ?? ""),
+        TextField(
+          controller: antwortCtl,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Antwort',
           ),
         ),
-      );
+        ElevatedButton(
+          onPressed: () => change(-1),
+          child: const Text(
+            '<',
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () => change(1),
+          child: const Text(
+            '>',
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () => answer(antwortCtl.text),
+          child: const Text(
+            'Absenden',
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+      ],
+    );
+  }
 }

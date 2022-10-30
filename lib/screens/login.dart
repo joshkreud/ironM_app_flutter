@@ -49,11 +49,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (!mounted) return;
 
-      final abc = locator<ApplicationModel>();
+      final model = locator<ApplicationModel>();
 
-      abc.myself = body?.playerId ?? 0;
-      abc.newGameModel = body;
-      abc.questions = questions.body;
+      model.myself = body?.playerId ?? 0;
+      model.newGameModel = body;
+      model.authentication = 'bearer ' + (body?.bearerToken ?? 'null');
+      model.questions = questions.body;
       context.go("/map");
     } else {
       // Error code received from server
@@ -92,53 +93,58 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text(App.title)),
-        body: Container(
-          margin: const EdgeInsets.only(left: 20, right: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: TextField(
-                  controller: teamNameCtl,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Teamname',
+  Widget build(BuildContext context) {
+    // Fixed lobby code for hackathon
+    eventCodeCtrl.text = "abae8e54-6000-4688-b366-e30b91abac1d";
+
+    return Scaffold(
+      appBar: AppBar(title: const Text(App.title)),
+      body: Container(
+        margin: const EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: TextField(
+                controller: teamNameCtl,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Teamname',
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: TextField(
+                controller: eventCodeCtrl,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () => scanQR(),
+                    icon: const Icon(Icons.qr_code),
+                  ),
+                  border: const OutlineInputBorder(),
+                  hintText: 'Veranstaltungscode',
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: ElevatedButton(
+                  onPressed: () => joinGame(),
+                  child: const Text(
+                    'Login to Game',
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: TextField(
-                  controller: eventCodeCtrl,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () => scanQR(),
-                      icon: const Icon(Icons.qr_code),
-                    ),
-                    border: const OutlineInputBorder(),
-                    hintText: 'Veranstaltungscode',
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 40,
-                  child: ElevatedButton(
-                    onPressed: () => joinGame(),
-                    child: const Text(
-                      'Login to Game',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
+  }
 }

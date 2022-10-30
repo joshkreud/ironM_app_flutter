@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:iron_app/constants.dart';
 import 'package:iron_app/models/IronGame.swagger.dart';
 import 'package:iron_app/models/singleton/ApplicationModel.dart';
 import 'package:iron_app/screens/frage.dart';
@@ -23,32 +24,45 @@ class _FragenScreenState extends State<FragenScreen> {
   final ApplicationModel applicationmodel;
   void _change(int change) {
     applicationmodel.CurrentQuestion += change;
-  }
-
-  void _answer(String answer) {
-    if (applicationmodel.answer != null) {
-      applicationmodel.answer?.add(
-          AnswerDto(answerText: answer, playerId: applicationmodel.myself));
-      _change(1);
+    if ((applicationmodel?.CurrentQuestion ?? 0) + 1 >
+        (applicationmodel?.questions?.length ?? 0)) {
+      applicationmodel.CurrentQuestion =
+          (applicationmodel?.questions?.length ?? 1) - 1;
+    }
+    if ((applicationmodel?.CurrentQuestion ?? 0) < 1) {
+      applicationmodel?.CurrentQuestion = 0;
     }
   }
 
+  void _answer(String answer) async {
+    final model = locator<ApplicationModel>();
+    final ironService = IronGame.create(baseUrl: ApiConstants.baseUrl);
+    final currentquestion =
+        applicationmodel.questions?[applicationmodel.CurrentQuestion];
+    final response = await ironService.apiQuizSendanswerPost(
+        authorization: model.authentication,
+        body: NewAnswerMessage(
+            answerText: answer, questionId: currentquestion?.id));
+    print(response);
+    _change(1);
+  }
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text("IronMap"),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FrageScreen(
-                  answer: _answer,
-                  change: _change,
-                  question: applicationmodel
-                      .questions[applicationmodel.CurrentQuestion]),
-            ],
-          ),
-        ),
-      );
+  Widget build(BuildContext context) {
+    _change(0);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("IronMap"),
+      ),
+      body: Center(
+        child:
+            // Text("asdas")
+            FrageScreen(
+                answer: _answer,
+                change: _change,
+                question: applicationmodel
+                    .questions?[applicationmodel.CurrentQuestion]),
+      ),
+    );
+  }
 }
