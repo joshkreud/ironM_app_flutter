@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iron_app/screens/login.dart';
-import 'package:iron_app/screens/quizlist.dart';
+import 'package:iron_app/screens/map.dart';
 
 // This scenario demonstrates a simple two-page app.
 //
@@ -40,9 +40,9 @@ class App extends StatelessWidget {
             const LoginScreen(),
         routes: <GoRoute>[
           GoRoute(
-            path: 'page2',
+            path: 'map',
             builder: (BuildContext context, GoRouterState state) =>
-                const QuizList(),
+                const MapScreen(),
           ),
         ],
       ),

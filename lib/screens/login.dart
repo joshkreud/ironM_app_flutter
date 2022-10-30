@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iron_app/main.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:iron_app/constants.dart';
-import 'package:chopper/chopper.dart';
 import 'package:iron_app/models/IronGame.swagger.dart';
-import 'package:iron_app/models/client_index.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,14 +16,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
-  final veranstaltungsCodeController = TextEditingController();
-  final teamNameController = TextEditingController();
+  final eventCodeCtrl = TextEditingController();
+  final teamNameCtl = TextEditingController();
 
-  void joinGame() async {
+  Future<bool> joinGame() async {
     final ironService = IronGame.create(baseUrl: ApiConstants.baseUrl);
     final joinBody = JoinGameMessage(
-        gameId: veranstaltungsCodeController.text,
-        credentials: Credentials(teamName: teamNameController.text));
+        gameId: eventCodeCtrl.text,
+        credentials: Credentials(teamName: teamNameCtl.text));
 
     final response =
         await ironService.apiQuizRegistrationJoingamePost(body: joinBody);
@@ -38,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Successful request
       final body = response.body;
       print(body);
+      return true;
     } else {
       // Error code received from server
       final code = response.statusCode;
@@ -45,13 +40,15 @@ class _LoginScreenState extends State<LoginScreen> {
       print("Error");
       print(code);
       print(error);
+      return false;
     }
   }
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    veranstaltungsCodeController.dispose();
+    eventCodeCtrl.dispose();
+    teamNameCtl.dispose();
     super.dispose();
   }
 
