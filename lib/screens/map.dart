@@ -22,22 +22,44 @@ class _MapScreenState extends State<MapScreen> {
     context.go("/fragen");
   }
 
+  void showHelp() {
+    context.go("/help");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("IronMap"),
       ),
-      floatingActionButton: SizedBox(
-        width: 200,
-        child: FloatingActionButton(
-          onPressed: () => showQuestion(),
-          backgroundColor: Colors.green,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
-          child: const Text("zu den Aufgaben"),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Stack(children: [
+        Align(
+          alignment: Alignment.bottomRight,
+          child: SizedBox(
+            width: 200,
+            child: FloatingActionButton(
+              heroTag: "QuestionButton",
+              onPressed: () => showQuestion(),
+              backgroundColor: Colors.green,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              child: const Text("zu den Aufgaben"),
+            ),
+          ),
         ),
-      ),
+        Align(
+          alignment: FractionalOffset.bottomLeft,
+          child: FloatingActionButton(
+            heroTag: "HelpButton",
+            onPressed: () => showHelp(),
+            backgroundColor: Colors.green,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            child: const Icon(Icons.question_mark),
+          ),
+        ),
+      ]),
       body: FlutterMap(
         options: MapOptions(
           center: LatLng(50.558757, 9.688264),
